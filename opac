@@ -19,7 +19,7 @@ if ((desired_opacity_percentage >= 25 && desired_opacity_percentage <= 100)); th
 
     # Replace with desired value
     sed -i "s/^.*opacity = $current_opacity.*$/opacity = $desired_opacity/" "$config_file"
-    echo "Opacity updated from $current_opacity to $desired_opacity in $config_file."
+    #echo "Opacity updated from $current_opacity to $desired_opacity in $config_file."
 else
     echo "Error: Invalid opacity percentage. Please enter a value between 25 and 100."
     exit 1
