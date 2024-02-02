@@ -1,0 +1,27 @@
+#!/bin/bash
+
+config_file="$HOME/.config/alacritty/alacritty.toml"
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <opacity_percentage>"
+    exit 1
+fi
+
+desired_opacity_percentage="$1"
+
+# Check if the desired_opacity_percentage is within the specified range
+if ((desired_opacity_percentage >= 25 && desired_opacity_percentage <= 100)); then
+    # Convert percentage to the range 0.25 to 1.00
+    desired_opacity=$(awk "BEGIN {printf \"%.2f\", $desired_opacity_percentage / 100}")
+
+    # Extract current opacity value
+    current_opacity=$(sed -n 's/^.*opacity = \([0-9.]*\).*$/\1/p' "$config_file")
+
+    # Replace with desired value
+    sed -i "s/^.*opacity = $current_opacity.*$/opacity = $desired_opacity/" "$config_file"
+    echo "Opacity updated from $current_opacity to $desired_opacity in $config_file."
+else
+    echo "Error: Invalid opacity percentage. Please enter a value between 25 and 100."
+    exit 1
+fi
+
